@@ -1,0 +1,14 @@
+{
+  "global": {
+    "parseVersion": "1.5.0"
+  },
+  "applications": {
+    "React-demo": {
+      "applicationId": "1D42VXTI4hXuAN5QwdgUZE7eQJYO0vdmsTPFwfDC",
+      "masterKey": "uGtwtJzAgnFl2N7YPj46XVDUFxA8U9S3HcXtXyCY"
+    },
+    "_default": {
+      "link": "React-demo"
+    }
+  }
+}
