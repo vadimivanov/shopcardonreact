@@ -1,0 +1,84 @@
+.list li {
+    line-height: 30px;
+    height: 30px;
+    width: 100%;
+    display: block;
+    margin: 0 0 10px;
+}
+
+.list li:after{ clear: both; }
+
+
+.list li .itemContent {
+    background-color: #76bba2;
+    height : 100%;
+    overflow: hidden;
+    margin-right: 33px;
+    padding-left: 10px;
+}
+
+.list li.finished .itemContent {
+    background-color: darkslategrey;
+}
+
+.list li .delete {
+    float: right;
+    color: #ffffff;
+    background-color: #a20025;
+    width : 30px;
+    height: 100%;
+    text-align: center;
+}
+body {
+    background-color: #eee;
+    font-family: 'Open Sans', sans-serif;
+    color: #000;
+}
+#screen{
+    padding: 10px;
+}
+input {
+    background-color: lightgray;
+    border-color: gray;
+    border-style: hidden;
+}
+
+button{
+    width: 100%;
+    background-color: rosybrown;
+    padding: 5px 15px;
+    height: 30px;
+    text-align: center;
+    color: darkslategrey;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    margin: 0 0 20px;
+    box-sizing: border-box;
+}
+.row{
+    padding: 0 0 15px;
+    overflow: hidden;
+    line-height: 30px;
+}
+h5{
+    margin: 0 0 15px;
+    font-size: 24px;
+    line-height: 26px;
+}
+.row label{
+    float: left;
+    padding-right: 5%;
+    width: 20%;
+}
+.row input[type="text"]{
+    float: left;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 20px;
+    height:30px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    width: 75%; }
