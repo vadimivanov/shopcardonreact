@@ -1,3 +1,25 @@
+/*.signin-component{*/
+    /*margin: auto;*/
+    /*width: 60%;*/
+    /*padding: 10px;*/
+/*}*/
+.signin-component input{
+    margin: auto;
+    width:100%;
+}
+.signin-component{
+    padding: 10px 10px 10px 10px;
+    margin: -260px 0 0 -385px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: 0;
+    bottom: 0;
+    width: 740px;
+    height: 400px;
+    overflow: hidden;
+    text-align: center;
+}
 .list li {
     line-height: 30px;
     height: 30px;
@@ -10,7 +32,8 @@
 
 
 .list li .itemContent {
-    background-color: #76bba2;
+    background-color: #3e3f3f;
+    color: #c6c8c8;
     height : 100%;
     overflow: hidden;
     margin-right: 33px;
@@ -18,7 +41,7 @@
 }
 
 .list li.finished .itemContent {
-    background-color: darkslategrey;
+    background-color: #80888e;
 }
 
 .list li .delete {
@@ -28,28 +51,30 @@
     width : 30px;
     height: 100%;
     text-align: center;
+    cursor: pointer;
+}
+.itemName{
+    padding-right: 20px;
 }
 body {
-    background-color: #eee;
+    background-color: #4b4d4e;
     font-family: 'Open Sans', sans-serif;
-    color: #000;
+    color: #c6c8c8;
 }
 #screen{
     padding: 10px;
 }
 input {
-    background-color: lightgray;
-    border-color: gray;
     border-style: hidden;
 }
 
 button{
     width: 100%;
-    background-color: rosybrown;
+    background-color: #A5A7A7;
     padding: 5px 15px;
     height: 30px;
     text-align: center;
-    color: darkslategrey;
+    /*color: #c6c8c8;*/
     border-radius: 5px;
     text-transform: uppercase;
     font-size: 18px;
@@ -67,6 +92,7 @@ h5{
     margin: 0 0 15px;
     font-size: 24px;
     line-height: 26px;
+    text-align: center;
 }
 .row label{
     float: left;
@@ -81,4 +107,43 @@ h5{
     height:30px;
     padding: 5px 10px;
     box-sizing: border-box;
-    width: 75%; }
+    width: 75%;
+}
+.logout{
+    width: 100px;
+    font-size: 12px;
+    font-weight: bold;
+    float: right;
+}
+.lightbox {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+.alert-wrap{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+.alert{
+    background-color: #fff;
+    padding: 10px 10px 10px 10px;
+    margin: -80px 0 0 -187px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: 0;
+    bottom: 0;
+    width: 340px;
+    height: 80px;
+    overflow: hidden;
+    text-align: center;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.7);
+}
+.alert-text{
+    margin-bottom: 20px;
+    color: red;
+
+}

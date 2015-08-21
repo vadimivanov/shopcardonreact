@@ -9,15 +9,12 @@ var Login = React.createClass({
         var self = this,
             login = this.refs.username.getDOMNode().value,
             pass = this.refs.password.getDOMNode().value;
-        console.log('login form', login, pass);
 
         Parse.User.logIn(login, pass, {
             success: function(user) {
-                console.log('login success',user);
                 self.authSuccess();
             },
             error: function(user, error) {
-                console.log('login error', user, error);
                 self.showError(error.message);
             }
         });
@@ -28,7 +25,7 @@ var Login = React.createClass({
             newUsername = this.refs.newUsername.getDOMNode().value,
             newPassword = this.refs.newPassword.getDOMNode().value;
 
-        if (!newUsername.length || !newPassword.length /*|| !email*/) {
+        if (!newUsername.length || !newPassword.length) {
             this.showError('verify your credentials, please');
             return false;
         }
@@ -48,7 +45,7 @@ var Login = React.createClass({
         });
     },
     showError: function (error){
-        alert(error);
+       PubSub.publish("alert.channel", {error: error});
     },
     authSuccess: function (){
         console.log('auth success');
@@ -56,19 +53,27 @@ var Login = React.createClass({
     },
     render: function() {
         return (
-            <div>
-                <h3 className='header topcoat-list__header'>Sign in form</h3>
-                <form>
-                    <input ref="username" placeholder="login" />
-                    <input ref="password" placeholder="password" />
+            <div className='signin-component'>
+                <h5 className='header'>Sign in form</h5>
+                <div className="row">
+                    <div>
+                        <input ref="username" placeholder="login" />
+                    </div>
+                    <div>
+                        <input ref="password" type="password" placeholder="password" />
+                    </div>
                     <button onClick={this.login}>Sign in</button>
-                </form>
-                <h3 className='header topcoat-list__header'>Sign up form</h3>
-                <form>
-                    <input ref="newUsername" placeholder="login" />
-                    <input ref="newPassword" placeholder="password" />
+                </div>
+                <h5 className='header topcoat-list__header'>Sign up form</h5>
+                <div className="row">
+                    <div>
+                        <input ref="newUsername" placeholder="login" />
+                    </div>
+                    <div>
+                        <input ref="newPassword" placeholder="password" />
+                    </div>
                     <button onClick={this.signUp}>Sign up</button>
-                </form>
+                </div>
             </div>
             );
     }
