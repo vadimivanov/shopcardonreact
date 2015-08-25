@@ -3,7 +3,7 @@ var App = React.createClass({
     getInitialState: function () {
         return {
             currentView: "Login",
-//            startRout: "Login",
+            startRout: "Login",
             params: null
         };
     },

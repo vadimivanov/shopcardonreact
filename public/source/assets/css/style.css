@@ -44,6 +44,9 @@
     background-color: #80888e;
 }
 
+.list li input[type="checkbox"]:checked {
+    background-color: #80888e;
+}
 .list li .delete {
     float: right;
     color: #ffffff;

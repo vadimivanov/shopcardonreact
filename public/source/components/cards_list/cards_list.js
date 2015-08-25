@@ -3,86 +3,101 @@ var List = React.createClass({
     getInitialState: function() {
         return {
             items: [],
-            render: false,
-            ShoppingList: Parse.Object.extend("ShoppingList")
-
+            finished: false,
+            ShoppingList: new ParseShoppingList
+//            ShoppingList: Parse.Object.extend("ShoppingList")
         };
     },
     componentDidMount: function () {
-        this.load();
+        this.state.ShoppingList.load();
+        var self = this;
+        PubSub.subscribe('list.channel', function (channel, message) {
+//            console.log('subscribe-form-list',channel, message);
+            console.log('componentDidMount',self.state.ShoppingList,message);
+            self.setState({items: message});
+        });
     },
     handleClick: function (id) {
-        console.log('clickHandler',this.props,id);
+//        console.log('clickHandler',this.props,id);
         this.removeItem(id);
     },
-
-    componentWillReceiveProps: function () {
-        var self = this;
-        console.log('componentWillReceiveProps',this.props);
-        if (this.props.render == true) {
-            this.load();
-        }
+    handleChange: function (index, e) {
+        var value = e.target.checked;
+        var checkedModel = this.state.items[index];
+       console.log('handleChange',checkedModel,this.state.items);
+//        this.setState({items: state});
+//        checkedItem.className += ' finished';
+    },
+    componentWillReceiveProps: function (nextProps) {
+        this.state.items.push(nextProps.items);
+        this.state.ShoppingList.load();
+        console.log('componentWillReceiveProps',this.state.ShoppingList,nextProps,this.state.items);
 //        this.load();
 //        PubSub.subscribe('list.channel', function (channel, message) {
 //            console.log('subscribe-form-list',channel, message);
 //            self.setState({items: message});
 //        });
     },
-    load: function (){
-        var self = this,
-            currentUser = new Parse.ACL(Parse.User.current()),
-            query = new Parse.Query(this.state.ShoppingList),
-            resultsData;
-        console.log('currentUser',currentUser);
-        query.equalTo('user', currentUser);
-        query.find({
-            success: function(results) {
-                console.log('results',results);
-                var mapData;
-                resultsData = results.map(function(item){
-                    mapData = item.get('content');
-                    return {
-                        id: item.id,
-                        name: mapData.name,
-                        amount: mapData.amount
-                    };
-                });
-                console.log('success result',resultsData );
-            },
-            error: function(error) {}
-        }).then(function (obj) {
-            self.setState({items: resultsData});
-        });
-    },
+//    load: function (){
+//        var self = this,
+//            currentUser = new Parse.ACL(Parse.User.current()),
+//            query = new Parse.Query(this.state.ShoppingList),
+//            resultsData;
+//        console.log('currentUser',currentUser);
+//        query.equalTo('user', currentUser);
+//        query.find({
+//            success: function(results) {
+//                console.log('results',results);
+//                var mapData;
+//                resultsData = results.map(function(item){
+//                    mapData = item.get('content');
+//                    return {
+//                        id: item.id,
+//                        name: mapData.name,
+//                        amount: mapData.amount
+//                    };
+//                });
+//                console.log('success result',resultsData );
+//            },
+//            error: function(error) {}
+//        }).then(function (obj) {
+//            self.setState({items: resultsData});
+//        });
+//    },
     removeItem: function (id) {
-        var currentUser = new Parse.ACL(Parse.User.current()),
-            query = new Parse.Query(this.state.ShoppingList),
-            self=this;
-        console.log('currentUser',currentUser);
-        query.equalTo('user', currentUser);
-        query.equalTo('objectId', id);
-        query.find({
-            success: function(data) {
-                Parse.Object.destroyAll(data, {
-                    success: function () {},
-                    error: function (error) {}
-                });
-            },
-            error: function(error) {}
-        }).then(function (obj) {
-            console.log('remove=then',obj );
-            self.load();
-        });
+        console.log('removeItem',this.state.ShoppingList.models,id);
+        var destroyModel = this.state.ShoppingList.models[id];
+        destroyModel.destroy();
+        this.state.ShoppingList.load();
+//        this.state.List.remove(id);
+//        var currentUser = new Parse.ACL(Parse.User.current()),
+//            query = new Parse.Query(this.state.ShoppingList),
+//            self=this;
+//        console.log('currentUser',currentUser);
+//        query.equalTo('user', currentUser);
+//        query.equalTo('objectId', id);
+//        query.find({
+//            success: function(data) {
+//                Parse.Object.destroyAll(data, {
+//                    success: function () {},
+//                    error: function (error) {}
+//                });
+//            },
+//            error: function(error) {}
+//        }).then(function (obj) {
+//            console.log('remove=then',obj );
+//            self.load();
+//        });
     },
 
     render: function() {
         console.log('createItem',this.state.items);
         var self = this;
         var createItem = function (items, index) {
-            return <li className='list-item'>
-                <div className="delete" onClick={self.handleClick.bind(self, items.id)}>del</div>
+            return <li className={items.finished ? 'list-item finished' : 'list-item '}>
+                <div className="delete" onClick={self.handleClick.bind(self, index)}>del</div>
                 <div className="itemContent">
-                    <input type="checkbox"/>
+                    <input type="checkbox" checked={self.state.finished} onChange={self.handleChange.bind(this, index)}/>
                     <span className="itemName">
                         {items.name}
                     </span>

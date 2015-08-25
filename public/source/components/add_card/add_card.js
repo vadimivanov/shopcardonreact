@@ -4,17 +4,18 @@ var AddCard = React.createClass({
             items: [],
             value: '',
             render: true
+
         };
     },
     componentDidMount: function () {
-        'use strict';
-        this.getList();
+//        this.getList();
     },
     handleChange: function (data) {
-        var stateItems = this.state.items;
-        stateItems.push(data);
-        console.log('data',stateItems);
-        this.setState({render: true, value: ''});
+//        var stateItems = this.state.items;
+//        stateItems.push(data);
+        console.log('data',data);
+        this.setState({items: data});
+        console.log('then result save ', this.state.items);
     },
     getInfo: function(e) {
         var name = this.refs.name.getDOMNode().value,
@@ -22,13 +23,17 @@ var AddCard = React.createClass({
             userKey = new Parse.ACL(Parse.User.current()),
             ShoppingList = Parse.Object.extend("ShoppingList"),
             privateNote = new ShoppingList;
-
-        privateNote.set("content", {name: name, amount: amount});
+        var self = this;
+        privateNote.set("content", {name: name, amount: amount, finished: false});
         privateNote.set("user", userKey);
-        privateNote.save();
-        this.handleChange({
-            amount: amount,
-            name: name
+        privateNote.save().then(function (res) {
+            self.handleChange({
+                amount: amount,
+                name: name,
+                finished: false,
+                id: res.id
+            });
+
         });
     },
     getList: function () {
@@ -62,7 +67,7 @@ var AddCard = React.createClass({
                     <button onClick={this.getInfo}>Add</button>
                 </div>
             <div className='list-wrap'>
-                <List render={this.state.render}/>
+                <List items={this.state.items}/>
             </div>
             </div>
             );
