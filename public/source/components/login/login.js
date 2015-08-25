@@ -43,6 +43,8 @@ var Login = React.createClass({
                 self.showError(error.code + " " + error.message);
             }
         });
+//        this.refs.newUsername.getDOMNode().value = '';
+//        this.refs.newPassword.getDOMNode().value = '';
     },
     showError: function (error){
        PubSub.publish("alert.channel", {error: error});

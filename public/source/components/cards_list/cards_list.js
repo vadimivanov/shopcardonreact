@@ -23,8 +23,22 @@ var List = React.createClass({
     },
     handleChange: function (index, e) {
         var value = e.target.checked;
-        var checkedModel = this.state.items[index];
-       console.log('handleChange',checkedModel,this.state.items);
+//        var valueSelect = this.refs.itemSelector.getDOMNode().checked;
+        var checkedModel = this.state.ShoppingList.at(index);
+        var id = e.target.getAttribute('data-id');
+        var state = this.state.items.map(function(d) {
+            return {
+                id: d.id,
+                name: d.name,
+                amount: d.amount,
+                finished: (d.id === id ? !d.finished : d.finished)
+            };
+        });
+        checkedModel.set({content: state[index]});
+        checkedModel.save();
+        this.setState({ items: state });
+
+        console.log('handleChange',value,state,this.state.ShoppingList.at(index));
 //        this.setState({items: state});
 //        checkedItem.className += ' finished';
     },
@@ -91,13 +105,13 @@ var List = React.createClass({
     },
 
     render: function() {
-        console.log('createItem',this.state.items);
         var self = this;
+        console.log('createItem',this.state.items);
         var createItem = function (items, index) {
             return <li className={items.finished ? 'list-item finished' : 'list-item '}>
                 <div className="delete" onClick={self.handleClick.bind(self, index)}>del</div>
                 <div className="itemContent">
-                    <input type="checkbox" checked={self.state.finished} onChange={self.handleChange.bind(this, index)}/>
+                    <input type="checkbox" data-id={items.id} checked={self.state.items[index].finished} onChange={self.handleChange.bind(this, index)}/>
                     <span className="itemName">
                         {items.name}
                     </span>

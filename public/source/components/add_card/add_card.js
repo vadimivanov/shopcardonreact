@@ -4,7 +4,6 @@ var AddCard = React.createClass({
             items: [],
             value: '',
             render: true
-
         };
     },
     componentDidMount: function () {
@@ -14,8 +13,10 @@ var AddCard = React.createClass({
 //        var stateItems = this.state.items;
 //        stateItems.push(data);
         console.log('data',data);
+        console.log('then result save ', this.state.items,data);
+        this.refs.name.getDOMNode().value = '';
+        this.refs.amount.getDOMNode().value = '';
         this.setState({items: data});
-        console.log('then result save ', this.state.items);
     },
     getInfo: function(e) {
         var name = this.refs.name.getDOMNode().value,
@@ -33,7 +34,6 @@ var AddCard = React.createClass({
                 finished: false,
                 id: res.id
             });
-
         });
     },
     getList: function () {
@@ -57,7 +57,7 @@ var AddCard = React.createClass({
                 <h5>Add notes</h5>
                 <div className="row">
                     <label for="name">product name:</label>
-                    <input ref="name" type="text" />
+                    <input ref="name" type="text"/>
                 </div>
                 <div className="row">
                     <label for="amount">amount:</label>
