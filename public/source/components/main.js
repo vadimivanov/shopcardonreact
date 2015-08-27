@@ -10,6 +10,7 @@ var App = React.createClass({
 
     componentDidMount: function () {
         var self = this;
+
         PubSub.subscribe('main.channel', function (channel, message) {
             self.setState({
                 currentView: message.currentView,
@@ -18,7 +19,6 @@ var App = React.createClass({
         });
         console.log('app.initialRoute',app);
         Router.navigate(this.state.startRout);
-        Router.check(app.initialRoute);
     },
 
     render: function () {

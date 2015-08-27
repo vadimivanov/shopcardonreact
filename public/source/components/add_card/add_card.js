@@ -1,5 +1,5 @@
 var AddCard = React.createClass({
-    getInitialState: function() {
+    getInitialState: function () {
         return {
             items: [],
             value: '',
@@ -7,48 +7,33 @@ var AddCard = React.createClass({
         };
     },
     componentDidMount: function () {
-//        this.getList();
+        var self = this;
+        ParseList.on('all', function () {
+            self.forceUpdate();
+        });
     },
-    handleChange: function (data) {
-//        var stateItems = this.state.items;
-//        stateItems.push(data);
-        console.log('data',data);
-        console.log('then result save ', this.state.items,data);
-        this.refs.name.getDOMNode().value = '';
-        this.refs.amount.getDOMNode().value = '';
-        this.setState({items: data});
-    },
-    getInfo: function(e) {
+    getInfo: function (e) {
         var name = this.refs.name.getDOMNode().value,
             amount = this.refs.amount.getDOMNode().value,
-            userKey = new Parse.ACL(Parse.User.current()),
+            userKey = Parse.User.current(),
             ShoppingList = Parse.Object.extend("ShoppingList"),
             privateNote = new ShoppingList;
-        var self = this;
-        privateNote.set("content", {name: name, amount: amount, finished: false});
+
+        privateNote.set("content", {name: name, amount: amount});
+        privateNote.set("finished", false);
         privateNote.set("user", userKey);
         privateNote.save().then(function (res) {
-            self.handleChange({
-                amount: amount,
-                name: name,
-                finished: false,
-                id: res.id
-            });
+            ParseList.add(res);
         });
+        this.refs.name.getDOMNode().value = '';
+        this.refs.amount.getDOMNode().value = '';
+        this.setState({value: ''});
     },
-    getList: function () {
-        var self = this;
-        PubSub.subscribe('list.channel', function (channel, message) {
-            console.log('subscribe-form',channel, message);
-            self.setState({items: message});
-        });
-    },
-    logout : function (){
+    logout: function () {
         Parse.User.logOut();
         Router.navigate("Login");
     },
-    render: function() {
-        var value = this.state.value;
+    render: function () {
         return (
             <div className='addform-component'>
                 <div className="row">
@@ -56,18 +41,18 @@ var AddCard = React.createClass({
                 </div>
                 <h5>Add notes</h5>
                 <div className="row">
-                    <label for="name">product name:</label>
+                    <label htmlFor="name">product name:</label>
                     <input ref="name" type="text"/>
                 </div>
                 <div className="row">
-                    <label for="amount">amount:</label>
+                    <label htmlFor="amount">amount:</label>
                     <input ref="amount" type="text"/>
                 </div>
                 <div className="row">
                     <button onClick={this.getInfo}>Add</button>
                 </div>
             <div className='list-wrap'>
-                <List items={this.state.items}/>
+                <CardsList />
             </div>
             </div>
             );

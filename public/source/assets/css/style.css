@@ -102,15 +102,19 @@ h5{
     padding-right: 5%;
     width: 20%;
 }
-.row input[type="text"]{
+.row input[type="text"],input[type="password"]{
     float: left;
     font-weight: bold;
     font-size: 18px;
     line-height: 20px;
-    height:30px;
+    height: 30px;
     padding: 5px 10px;
     box-sizing: border-box;
     width: 75%;
+}
+.signin-component input[type="text"],input[type="password"]{
+    width: 100%;
+    margin-bottom: 10px;
 }
 .logout{
     width: 100px;
