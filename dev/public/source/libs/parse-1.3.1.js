@@ -1409,7 +1409,7 @@
   };
 
   /**
-   * Returns the unique string for this app on this machine.
+   * Returns the unique string for this dev on this machine.
    * Gets reset when localStorage is cleared.
    */
   Parse._installationId = null;
@@ -8939,7 +8939,7 @@
       }
     },
 
-    // Disable Parse.history, perhaps temporarily. Not useful in a real app,
+    // Disable Parse.history, perhaps temporarily. Not useful in a real dev,
     // but possibly useful for unit testing Routers.
     stop: function() {
       Parse.$(window).unbind('popstate', this.checkUrl)
