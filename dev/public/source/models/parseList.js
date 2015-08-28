@@ -8,4 +8,3 @@ var ParseShoppingList = Parse.Collection.extend({
         this.fetch();
     }
 });
-var ParseList = new ParseShoppingList();
